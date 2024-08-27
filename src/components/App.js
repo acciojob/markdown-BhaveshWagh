@@ -1,39 +1,28 @@
-import React, { useState, useEffect } from 'react';
-
-
-import './../styles/App.css';
+import React, { useState, useEffect } from "react";
 
 const App = () => {
-  const [markdown, setMarkdown] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState(""); // State to store markdown text
 
-  useEffect(() => {
-    // Simulate loading process
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, [markdown]);
-
-  const handleMarkdownChange = (event) => {
-    setMarkdown(event.target.value);
+  // Handler for updating the text state when textarea value changes
+  const handleTextChange = (event) => {
+    setText(event.target.value);
   };
 
   return (
     <div className="app">
-      <div className="textarea">
+      <div className="markdown-container">
+        {/* Textarea for writing markdown */}
         <textarea
-          value={markdown}
-          onChange={handleMarkdownChange}
-          placeholder="Write your markdown here..."
-        />
-      </div>
-      <div className="preview">
-        {isLoading ? (
-          <p className="loading">Loading...</p>
-        ) : (
-          <h1 dangerouslySetInnerHTML={{ __html: markdown }} />
-        )}
+          className="textarea"
+          onChange={handleTextChange}
+          placeholder="Enter your markdown here..."
+        ></textarea>
+        
+        {/* Preview section */}
+        <div className="preview">
+          <h1>Markdown Preview</h1>
+          <p>{text}</p>
+        </div>
       </div>
     </div>
   );
