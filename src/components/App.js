@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
-import marked from "marked";
+import React, { useState, useEffect } from 'react';
+
+
+import './../styles/App.css';
 
 const App = () => {
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const renderedMarkdown = marked(markdown);
-    document.getElementById("preview").innerHTML = renderedMarkdown;
+    // Simulate loading process
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, [markdown]);
 
   const handleMarkdownChange = (event) => {
@@ -14,12 +20,20 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div>
-        <textarea value={markdown} onChange={handleMarkdownChange} />
+    <div className="app">
+      <div className="textarea">
+        <textarea
+          value={markdown}
+          onChange={handleMarkdownChange}
+          placeholder="Write your markdown here..."
+        />
       </div>
-      <div>
-        <div id="preview"></div>
+      <div className="preview">
+        {isLoading ? (
+          <p className="loading">Loading...</p>
+        ) : (
+          <h1 dangerouslySetInnerHTML={{ __html: markdown }} />
+        )}
       </div>
     </div>
   );
