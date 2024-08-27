@@ -1,13 +1,28 @@
-import React from "react";
-import Mark1 from "./Mark1";
-import Mark2 from "./Mark2";
+import React, { useState, useEffect } from "react";
+import marked from "marked";
 
-let App = () => {
+const App = () => {
+  const [markdown, setMarkdown] = useState("");
+
+  useEffect(() => {
+    const renderedMarkdown = marked(markdown);
+    document.getElementById("preview").innerHTML = renderedMarkdown;
+  }, [markdown]);
+
+  const handleMarkdownChange = (event) => {
+    setMarkdown(event.target.value);
+  };
+
   return (
-    <div className="app">
-      <Mark1 />
-      {/* <Mark2 /> */}
+    <div>
+      <div>
+        <textarea value={markdown} onChange={handleMarkdownChange} />
+      </div>
+      <div>
+        <div id="preview"></div>
+      </div>
     </div>
   );
 };
+
 export default App;
